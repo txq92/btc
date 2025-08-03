@@ -142,6 +142,7 @@ def send_telegram_notification(candle, analysis):
 def main():
     print("🟢 Khởi động trình theo dõi BTC/USDT")
     print(f"⏱ Múi giờ: {VIETNAM_TIMEZONE}")
+    send_telegram_alert(f"Khởi động trình theo dõi BTC/USDT ...", is_critical=False)
     
     while True:
         try:
