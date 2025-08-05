@@ -76,7 +76,7 @@ def analyze_candle(candle):
         
         lower_wick = min(open_price, close_price) - low_price
         lower_wick_percent = (lower_wick / low_price) * 100
-        has_lower_wick = lower_wick_percent >= 0.5
+        has_lower_wick = lower_wick_percent >= 1
         
         upper_wick = high_price - max(open_price, close_price)
         upper_wick_percent = (upper_wick / max(open_price, close_price)) * 100
@@ -142,7 +142,7 @@ def send_telegram_notification(candle, analysis):
 def main():
     print("🟢 Khởi động trình theo dõi BTC/USDT")
     print(f"⏱ Múi giờ: {VIETNAM_TIMEZONE}")
-    send_telegram_alert(f"Khởi động trình theo dõi BTC/USDT ...", is_critical=False)
+    send_telegram_alert(f"Khởi động trình theo dõi xxxx/USDT ...", is_critical=False)
     
     while True:
         try:
@@ -158,7 +158,7 @@ def main():
                     analysis_result = analyze_candle(candle_data)
                     
                     if analysis_result:
-                        print(f"✅ BTC/USDT - Loại nến: {analysis_result['candle_type'].upper()}")
+                        print(f"✅ Pump/USDT - Loại nến: {analysis_result['candle_type'].upper()}")
                         print(f"   Mở: {analysis_result['open']:,.2f} | Đóng: {analysis_result['close']:,.2f}")
                         print(f"   Cao: {analysis_result['high']:,.2f} | Thấp: {analysis_result['low']:,.2f}")
                         print(f"   Râu trên: {analysis_result['upper_wick_percent']:.4f}%")
