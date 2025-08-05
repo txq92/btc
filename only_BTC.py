@@ -80,7 +80,7 @@ def analyze_candle(candle):
         
         upper_wick = high_price - max(open_price, close_price)
         upper_wick_percent = (upper_wick / max(open_price, close_price)) * 100
-        has_upper_wick = upper_wick_percent >= 0.5
+        has_upper_wick = upper_wick_percent >= 1
         
         candle_type = "other"
         if has_lower_wick and not has_upper_wick:
