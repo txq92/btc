@@ -114,7 +114,7 @@ def send_telegram_notification(candle, analysis):
         candle_time = candle["open_time"].astimezone(VIETNAM_TIMEZONE).strftime("%H:%M:%S")
         
         message = f"""
-📊 *BTC/USDT - Nến {analysis['candle_type'].upper()}* lúc {candle_time}
+📊 *PUMP/USDT - Nến {analysis['candle_type'].upper()}* lúc {candle_time}
 ━━━━━━━━━━━━━━
 📈 Giá Mở: {analysis['open']:,.2f}
 📉 Giá Đóng: {analysis['close']:,.2f}
@@ -142,7 +142,7 @@ def send_telegram_notification(candle, analysis):
 def main():
     print("🟢 Khởi động trình theo dõi BTC/USDT")
     print(f"⏱ Múi giờ: {VIETNAM_TIMEZONE}")
-    send_telegram_alert(f"Khởi động trình theo dõi xxxx/USDT ...", is_critical=False)
+    send_telegram_alert(f"Theo Toàn là có nhà, có xe . Khởi động trình theo dõi PUMP/USDT ...", is_critical=False)
     
     while True:
         try:
