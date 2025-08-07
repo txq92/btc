@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Chỉ định lệnh mặc định khi container khởi động
-CMD ["python", "only_BTC.py"]
+CMD ["python", "Top_10_Coin.py"]

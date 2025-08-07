@@ -14,7 +14,7 @@ TELEGRAM_CHAT_ID = "-4706073326"
 
 # Chỉ theo dõi BTCUSDT
 SYMBOLS = {
-    "BTC_USDT": {"binance_symbol": "PUMPUSDT", "candle_interval": "5m", "limit": 2}
+    "BTC_USDT": {"binance_symbol": "BTCUSDT", "candle_interval": "5m", "limit": 2}
 }
 
 def send_telegram_alert(message, is_critical=False):
@@ -48,7 +48,7 @@ def fetch_latest_candle(symbol_config):
         response = requests.get(url, params=params, timeout=30)
         response.raise_for_status()
         candle_data = response.json()
-        latest_candle = candle_data[-1]
+        latest_candle = candle_data[-2]
         
         return {
             "open_time": datetime.fromtimestamp(latest_candle[0]/1000).replace(tzinfo=ZoneInfo("UTC")),
@@ -76,11 +76,11 @@ def analyze_candle(candle):
         
         lower_wick = min(open_price, close_price) - low_price
         lower_wick_percent = (lower_wick / low_price) * 100
-        has_lower_wick = lower_wick_percent >= 1
+        has_lower_wick = lower_wick_percent >= 0.29
         
         upper_wick = high_price - max(open_price, close_price)
         upper_wick_percent = (upper_wick / max(open_price, close_price)) * 100
-        has_upper_wick = upper_wick_percent >= 1
+        has_upper_wick = upper_wick_percent >= 0.22
         
         candle_type = "other"
         if has_lower_wick and not has_upper_wick:
@@ -114,7 +114,7 @@ def send_telegram_notification(candle, analysis):
         candle_time = candle["open_time"].astimezone(VIETNAM_TIMEZONE).strftime("%H:%M:%S")
         
         message = f"""
-📊 *PUMP/USDT - Nến {analysis['candle_type'].upper()}* lúc {candle_time}
+📊 *BTC/USDT - Nến {analysis['candle_type'].upper()}* lúc {candle_time}
 ━━━━━━━━━━━━━━
 📈 Giá Mở: {analysis['open']:,.2f}
 📉 Giá Đóng: {analysis['close']:,.2f}
@@ -142,7 +142,7 @@ def send_telegram_notification(candle, analysis):
 def main():
     print("🟢 Khởi động trình theo dõi BTC/USDT")
     print(f"⏱ Múi giờ: {VIETNAM_TIMEZONE}")
-    send_telegram_alert(f"Theo Toàn là có nhà, có xe . Khởi động trình theo dõi PUMP/USDT ...", is_critical=False)
+    send_telegram_alert(f"Khởi động trình theo dõi BTC/USDT ...", is_critical=False)
     
     while True:
         try:
@@ -158,7 +158,7 @@ def main():
                     analysis_result = analyze_candle(candle_data)
                     
                     if analysis_result:
-                        print(f"✅ Pump/USDT - Loại nến: {analysis_result['candle_type'].upper()}")
+                        print(f"✅ BTC/USDT - Loại nến: {analysis_result['candle_type'].upper()}")
                         print(f"   Mở: {analysis_result['open']:,.2f} | Đóng: {analysis_result['close']:,.2f}")
                         print(f"   Cao: {analysis_result['high']:,.2f} | Thấp: {analysis_result['low']:,.2f}")
                         print(f"   Râu trên: {analysis_result['upper_wick_percent']:.4f}%")
